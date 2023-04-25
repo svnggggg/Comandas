@@ -7,8 +7,8 @@ class Comanda:
     self.envio = envio
 
   def aplicarDescuento(self):
-    if self.monto >= 5000:
-      if self.envio == False:
+    if self.monto > 5000:
+      if self.envio.lower() == 'no':
         self.monto = self.monto - self.monto * 0.1
       else:
         self.monto = self.monto - self.monto * 0.05

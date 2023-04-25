@@ -1,9 +1,6 @@
 from comanda import Comanda
 listaComandas = []
 
-####
-
-
 def cargar_pedido():
   #print("chorizo!!!")
   monto = 0
@@ -12,7 +9,12 @@ def cargar_pedido():
 
   while True:
     try:
-      monto = abs(float(input('Ingrese el monto del pedido: \n')))
+      monto = float(input('Ingrese el monto del pedido: \n'))
+      if monto < 0:
+        print(
+          'Me pusiste un numero en negativo y te lo converti en positivo crack!'
+        )
+        monto = abs(monto)
       break
     except:
       print('Pone un numero crack!')
@@ -24,6 +26,11 @@ def cargar_pedido():
       break
     else:
       print('Pone si o no y no me compliques la vida!')
+
+  if envio:
+    envio = 'Si'
+  else:
+    envio = 'No'
 
   comanda = Comanda(descripcion, apellido, monto, envio)
   comanda.aplicarDescuento()
@@ -40,7 +47,12 @@ def modificar_pedido():
 
       while True:
         try:
-          monto = abs(float(input('Ingrese el nuevo monto del pedido: \n')))
+          monto = float(input('Ingrese el nuevo monto del pedido: \n'))
+          if monto < 0:
+            print(
+              'Me pusiste un numero en negativo y te lo converti en positivo crack!'
+            )
+            monto = abs(monto)
           break
         except:
           print('Pone un numero crack!')
@@ -48,10 +60,15 @@ def modificar_pedido():
       while True:
         envio = str(input('El pedido es para envío? (si o no): \n'))
         if envio.lower() == 'si' or envio.lower() == 'no':
-          envio = 'si' if envio.lower() == 'si' else 'no'
+          envio = True if envio.lower() == 'si' else False
           break
         else:
           print('Pone si o no y no me compliques la vida!')
+
+      if envio:
+        envio = 'Si'
+      else:
+        envio = 'No'
 
       comanda.descripcion = descripcion
       comanda.envio = envio
@@ -81,6 +98,7 @@ def eliminar():
 
 
 def mostrar():
+  m = False
   for i, value in enumerate(listaComandas):
     print('-------------------------')
     print(f'Tu pedido es: {value.descripcion}')
@@ -88,15 +106,22 @@ def mostrar():
     print(f'El monto del pedido es: ${value.monto}')
     print(f'Es con envio: {value.envio}')
     print('-------------------------')
+    m = True
+  if not m:
+    print('-------------------------')
+    print('No existe ninguna comanda.')
+    print('-------------------------')
 
 
 def listar_pedidos_envio():
   noEnvio = False
   for value in listaComandas:
-    if value.envio:
+    if value.envio.lower() == 'si':
       print('-------------------------')
       print(f'Tu pedido es: {value.descripcion}')
-      print('Tu pedido es con envio')
+      print(f'El apellido del pedido es: {value.ApCliente}')
+      print(f'El monto del pedido es: ${value.monto}')
+      print(f'Es con envio: {value.envio}')
       print('-------------------------')
       noEnvio = True
   if not noEnvio:
